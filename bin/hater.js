@@ -111,72 +111,10 @@ program
     await logout();
   });
 
-// Handle default command (interactive mode)
+// Handle default command (REPL mode)
 if (process.argv.length < 3) {
-  (async () => {
-    const { select, isCancel, cancel } = await import("@clack/prompts");
-    const { displayIntro } = await import("../lib/ui/display.js");
-    const { text } = await import("@clack/prompts");
-
-    while (true) {
-      // Clear screen for a fresh start
-      console.clear();
-      displayIntro();
-
-      const command = await select({
-        message: "What would you like to do?",
-        options: [
-          { value: "check", label: "🕵️  Check for Haters" },
-          { value: "start", label: "🚀 Start Background Service" },
-          { value: "stop", label: "🛑 Stop Background Service" },
-          { value: "status", label: "📊 Service Status" },
-          { value: "login", label: "🔑 Login" },
-          { value: "logout", label: "👋 Logout" },
-          { value: "followers", label: "👥 List Followers" },
-          { value: "following", label: "👀 List Following" },
-          { value: "quit", label: "🚪 Quit" },
-        ],
-      });
-
-      if (isCancel(command) || command === "quit") {
-        cancel("Bye!");
-        process.exit(0);
-      }
-
-      if (command === "check") {
-        const { check } = await import("../lib/commands/check.js");
-        await check();
-      } else if (command === "start") {
-        const { start } = await import("../lib/commands/daemon-control.js");
-        await start(720); // Default 12 hours
-      } else if (command === "stop") {
-        const { stop } = await import("../lib/commands/daemon-control.js");
-        await stop();
-      } else if (command === "status") {
-        const { status } = await import("../lib/commands/daemon-control.js");
-        await status();
-      } else if (command === "login") {
-        const { login } = await import("../lib/commands/login.js");
-        await login();
-      } else if (command === "logout") {
-        const { logout } = await import("../lib/commands/logout.js");
-        await logout();
-      } else if (command === "followers") {
-        const { followers } = await import("../lib/commands/followers.js");
-        await followers();
-      } else if (command === "following") {
-        const { following } = await import("../lib/commands/following.js");
-        await following();
-      }
-
-      if (command !== "quit") {
-        await text({
-          message: "Press Enter to return to menu...",
-          placeholder: "",
-        });
-      }
-    }
-  })();
+  const { repl } = await import("../lib/commands/repl.js");
+  await repl();
 } else {
   // Load art for help command
   import("../lib/ui/art.js").then(({ getBanner }) => {
