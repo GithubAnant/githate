@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "dotenv/config";
 import { Command } from "commander";
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -64,6 +65,53 @@ program
     await unfollow(username);
   });
 
+program
+  .command("watch")
+  .description("Continuously poll for new followers/unfollowers")
+  .option("-i, --interval <number>", "Polling interval in minutes", "10")
+  .action(async (cmd) => {
+    const { watch } = await import("../lib/commands/watch.js");
+    await watch(parseInt(cmd.interval));
+  });
+
+program
+  .command("start")
+  .description("Start the background tracking service")
+  .option("-i, --interval <number>", "Polling interval in minutes", "10")
+  .action(async (cmd) => {
+    const { start } = await import("../lib/commands/daemon-control.js");
+    await start(parseInt(cmd.interval));
+  });
+
+program
+  .command("stop")
+  .description("Stop the background tracking service")
+  .action(async () => {
+    const { stop } = await import("../lib/commands/daemon-control.js");
+    await stop();
+  });
+
+program
+  .command("status")
+  .description("Check the status of the background service")
+  .action(async () => {
+    const { status } = await import("../lib/commands/daemon-control.js");
+    await status();
+  });
+
+// Hidden command for the actual background process
+program
+  .command("__daemon", { hidden: true })
+  .option("-i, --interval <number>", "Polling interval", "10")
+  .action(async (cmd) => {
+    // In daemon mode, we silence stdout/stderr mostly,
+    // but the watch command might need adjustment to not try to render UI
+    const { watch } = await import("../lib/commands/watch.js");
+    // Pass a flag or env var to indicate daemon mode if needed,
+    // but cleaner is to rely on GITHATE_DAEMON env var we set in daemon.js
+    await watch(parseInt(cmd.interval));
+  });
+
 // Handle default command (interactive mode)
 if (process.argv.length < 3) {
   (async () => {
@@ -78,6 +126,10 @@ if (process.argv.length < 3) {
       message: "What would you like to do?",
       options: [
         { value: "check", label: "🕵️  Check for Haters" },
+        { value: "watch", label: "👀 Watch (Foreground)" },
+        { value: "start", label: "🚀 Start Background Service" },
+        { value: "stop", label: "🛑 Stop Background Service" },
+        { value: "status", label: "📊 Service Status" },
         { value: "login", label: "🔑 Login" },
         { value: "followers", label: "👥 List Followers" },
         { value: "following", label: "👀 List Following" },
@@ -93,6 +145,18 @@ if (process.argv.length < 3) {
     if (command === "check") {
       const { check } = await import("../lib/commands/check.js");
       await check();
+    } else if (command === "watch") {
+      const { watch } = await import("../lib/commands/watch.js");
+      await watch();
+    } else if (command === "start") {
+      const { start } = await import("../lib/commands/daemon-control.js");
+      await start(10); // Default 10 min
+    } else if (command === "stop") {
+      const { stop } = await import("../lib/commands/daemon-control.js");
+      await stop();
+    } else if (command === "status") {
+      const { status } = await import("../lib/commands/daemon-control.js");
+      await status();
     } else if (command === "login") {
       const { login } = await import("../lib/commands/login.js");
       await login();
