@@ -66,18 +66,9 @@ program
   });
 
 program
-  .command("watch")
-  .description("Continuously poll for new followers/unfollowers")
-  .option("-i, --interval <number>", "Polling interval in minutes", "10")
-  .action(async (cmd) => {
-    const { watch } = await import("../lib/commands/watch.js");
-    await watch(parseInt(cmd.interval));
-  });
-
-program
   .command("start")
   .description("Start the background tracking service")
-  .option("-i, --interval <number>", "Polling interval in minutes", "10")
+  .option("-i, --interval <number>", "Polling interval in minutes", "720")
   .action(async (cmd) => {
     const { start } = await import("../lib/commands/daemon-control.js");
     await start(parseInt(cmd.interval));
@@ -112,62 +103,84 @@ program
     await watch(parseInt(cmd.interval));
   });
 
+program
+  .command("logout")
+  .description("Logout and clear stored credentials")
+  .action(async () => {
+    const { logout } = await import("../lib/commands/logout.js");
+    await logout();
+  });
+
 // Handle default command (interactive mode)
 if (process.argv.length < 3) {
   (async () => {
     const { select, isCancel, cancel } = await import("@clack/prompts");
     const { displayIntro } = await import("../lib/ui/display.js");
+    const { text } = await import("@clack/prompts");
 
-    // Clear screen for a fresh start
-    console.clear();
-    displayIntro();
+    while (true) {
+      // Clear screen for a fresh start
+      console.clear();
+      displayIntro();
 
-    const command = await select({
-      message: "What would you like to do?",
-      options: [
-        { value: "check", label: "🕵️  Check for Haters" },
-        { value: "watch", label: "👀 Watch (Foreground)" },
-        { value: "start", label: "🚀 Start Background Service" },
-        { value: "stop", label: "🛑 Stop Background Service" },
-        { value: "status", label: "📊 Service Status" },
-        { value: "login", label: "🔑 Login" },
-        { value: "followers", label: "👥 List Followers" },
-        { value: "following", label: "👀 List Following" },
-        { value: "quit", label: "🚪 Quit" },
-      ],
-    });
+      const command = await select({
+        message: "What would you like to do?",
+        options: [
+          { value: "check", label: "🕵️  Check for Haters" },
+          { value: "start", label: "🚀 Start Background Service" },
+          { value: "stop", label: "🛑 Stop Background Service" },
+          { value: "status", label: "📊 Service Status" },
+          { value: "login", label: "🔑 Login" },
+          { value: "logout", label: "👋 Logout" },
+          { value: "followers", label: "👥 List Followers" },
+          { value: "following", label: "👀 List Following" },
+          { value: "quit", label: "🚪 Quit" },
+        ],
+      });
 
-    if (isCancel(command) || command === "quit") {
-      cancel("Bye!");
-      process.exit(0);
-    }
+      if (isCancel(command) || command === "quit") {
+        cancel("Bye!");
+        process.exit(0);
+      }
 
-    if (command === "check") {
-      const { check } = await import("../lib/commands/check.js");
-      await check();
-    } else if (command === "watch") {
-      const { watch } = await import("../lib/commands/watch.js");
-      await watch();
-    } else if (command === "start") {
-      const { start } = await import("../lib/commands/daemon-control.js");
-      await start(10); // Default 10 min
-    } else if (command === "stop") {
-      const { stop } = await import("../lib/commands/daemon-control.js");
-      await stop();
-    } else if (command === "status") {
-      const { status } = await import("../lib/commands/daemon-control.js");
-      await status();
-    } else if (command === "login") {
-      const { login } = await import("../lib/commands/login.js");
-      await login();
-    } else if (command === "followers") {
-      const { followers } = await import("../lib/commands/followers.js");
-      await followers();
-    } else if (command === "following") {
-      const { following } = await import("../lib/commands/following.js");
-      await following();
+      if (command === "check") {
+        const { check } = await import("../lib/commands/check.js");
+        await check();
+      } else if (command === "start") {
+        const { start } = await import("../lib/commands/daemon-control.js");
+        await start(720); // Default 12 hours
+      } else if (command === "stop") {
+        const { stop } = await import("../lib/commands/daemon-control.js");
+        await stop();
+      } else if (command === "status") {
+        const { status } = await import("../lib/commands/daemon-control.js");
+        await status();
+      } else if (command === "login") {
+        const { login } = await import("../lib/commands/login.js");
+        await login();
+      } else if (command === "logout") {
+        const { logout } = await import("../lib/commands/logout.js");
+        await logout();
+      } else if (command === "followers") {
+        const { followers } = await import("../lib/commands/followers.js");
+        await followers();
+      } else if (command === "following") {
+        const { following } = await import("../lib/commands/following.js");
+        await following();
+      }
+
+      if (command !== "quit") {
+        await text({
+          message: "Press Enter to return to menu...",
+          placeholder: "",
+        });
+      }
     }
   })();
 } else {
-  program.parse(process.argv);
+  // Load art for help command
+  import("../lib/ui/art.js").then(({ getBanner }) => {
+    program.addHelpText("before", getBanner());
+    program.parse(process.argv);
+  });
 }
