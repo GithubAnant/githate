@@ -28,7 +28,7 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/githate"><img src="https://img.shields.io/npm/v/githate" alt="npm version" /></a>
   <a href="https://www.npmjs.com/package/githate"><img src="https://img.shields.io/npm/dm/githate" alt="npm downloads" /></a>
-  <a href="https://github.com/GithubAnant/githate/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/githate" alt="license" /></a>
+
 </p>
 
 ---

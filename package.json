@@ -16,7 +16,7 @@
     "unfollowers",
     "tracker"
   ],
-  "author": "",
+  "author": "Anant Singhal",
   "license": "ISC",
   "dependencies": {
     "@clack/prompts": "^1.0.0",
