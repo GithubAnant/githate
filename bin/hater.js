@@ -19,6 +19,7 @@ program
 
 program
   .command("login")
+  .alias("/login")
   .description("Login to GitHub with a Personal Access Token")
   .action(async () => {
     const { login } = await import("../lib/commands/login.js");
@@ -27,6 +28,7 @@ program
 
 program
   .command("scan")
+  .alias("/scan")
   .description("Check for new unfollowers")
   .action(async () => {
     const { scan } = await import("../lib/commands/scan.js");
@@ -34,7 +36,17 @@ program
   });
 
 program
+  .command("haters")
+  .alias("/haters")
+  .description("View your hall of shame")
+  .action(async () => {
+    const { displayHaters } = await import("../lib/commands/haters.js");
+    await displayHaters();
+  });
+
+program
   .command("followers")
+  .alias("/followers")
   .description("List your followers")
   .action(async () => {
     const { followers } = await import("../lib/commands/followers.js");
@@ -43,6 +55,7 @@ program
 
 program
   .command("following")
+  .alias("/following")
   .description("List who you are following")
   .action(async () => {
     const { following } = await import("../lib/commands/following.js");
@@ -51,6 +64,7 @@ program
 
 program
   .command("follow <username>")
+  .alias("/follow")
   .description("Follow a user")
   .action(async (username) => {
     const { follow } = await import("../lib/commands/follow.js");
@@ -59,6 +73,7 @@ program
 
 program
   .command("unfollow <username>")
+  .alias("/unfollow")
   .description("Unfollow a user")
   .action(async (username) => {
     const { unfollow } = await import("../lib/commands/unfollow.js");
@@ -67,6 +82,7 @@ program
 
 program
   .command("start")
+  .alias("/start")
   .description("Start the background tracking service")
   .option("-i, --interval <number>", "Polling interval in minutes", "720")
   .action(async (cmd) => {
@@ -76,6 +92,7 @@ program
 
 program
   .command("stop")
+  .alias("/stop")
   .description("Stop the background tracking service")
   .action(async () => {
     const { stop } = await import("../lib/commands/daemon-control.js");
@@ -84,10 +101,29 @@ program
 
 program
   .command("status")
+  .alias("/status")
   .description("Check the status of the background service")
   .action(async () => {
     const { status } = await import("../lib/commands/daemon-control.js");
     await status();
+  });
+
+program
+  .command("clearcache")
+  .alias("/clearcache")
+  .description("Clear all cached data")
+  .action(async () => {
+    const { clearCache } = await import("../lib/commands/clear-cache.js");
+    await clearCache();
+  });
+
+program
+  .command("why")
+  .alias("/why")
+  .description("Why does this exist?")
+  .action(async () => {
+    const { displayWhy } = await import("../lib/ui/repl-text.js");
+    displayWhy();
   });
 
 // Hidden command for the actual background process
@@ -105,6 +141,7 @@ program
 
 program
   .command("logout")
+  .alias("/logout")
   .description("Logout and clear stored credentials")
   .action(async () => {
     const { logout } = await import("../lib/commands/logout.js");
