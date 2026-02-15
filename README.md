@@ -167,6 +167,7 @@ You can use GitHate without logging in. Just run `/scan` and enter any public Gi
 
 ---
 
+<!--
 ## Built By
 
 **Anant Singhal**
@@ -174,6 +175,7 @@ You can use GitHate without logging in. Just run `/scan` and enter any public Gi
 - [GitHub](https://github.com/GithubAnant)
 - [Twitter](https://twitter.com/anant_hq)
 - [LinkedIn](https://linkedin.com/in/anantsinghal1)
+-->
 
 ---
 
