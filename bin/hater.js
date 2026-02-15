@@ -26,11 +26,11 @@ program
   });
 
 program
-  .command("check")
+  .command("scan")
   .description("Check for new unfollowers")
   .action(async () => {
-    const { check } = await import("../lib/commands/check.js");
-    await check();
+    const { scan } = await import("../lib/commands/scan.js");
+    await scan();
   });
 
 program
