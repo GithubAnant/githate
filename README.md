@@ -1,104 +1,181 @@
-# GitHate CLI 🕵️‍♂️
+<!--
+  githate - GitHub Unfollower Tracker CLI Tool
+  Track who unfollowed you on GitHub | GitHub follower tracker | GitHub unfollow checker
+  Find out who unfollowed you on GitHub from the command line
+  GitHub CLI tool | npm CLI tool | GitHub followers | GitHub unfollowers | track GitHub followers
 
-**Track who unfollowed you on GitHub directly from your terminal.**
+  Author: Anant Singhal
+  GitHub: https://github.com/GithubAnant
+  Twitter: https://twitter.com/anant_hq
+  LinkedIn: https://linkedin.com/in/anantsinghal1
 
-`githate` is a modern, fast, and beautiful CLI tool that helps you keep track of your GitHub followers. It detects who unfollowed you since the last check and lets you manage your following list with ease.
+  Keywords: github unfollower tracker, github follower checker, who unfollowed me on github,
+  github cli tool, track github followers, github unfollow notification, githate, npm githate,
+  github follower manager, github social tracker, open source github tool
+-->
 
-![GitHate CLI Demo](https://placehold.co/600x400?text=GitHate+CLI+Demo)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/trickastle/githate-media/main/githate1_compressed.png" alt="GitHate CLI" width="700" />
+</p>
 
-## Features
+<h1 align="center">GitHate</h1>
 
-- 🕵️ **Track Unfollowers**: Instantly see who stopped following you.
-- 📈 **Track New Followers**: See who started following you.
-- 👥 **Manage Relationships**: List followers, following, and follow/unfollow users.
-- 🔐 **Secure**: Your Personal Access Token is stored locally on your machine.
-- 💅 **Beautiful UI**: Built with `@clack/prompts` and `picocolors` for a great experience.
+<p align="center">
+  Track who unfollowed you on GitHub. Directly from your terminal.<br/>
+  <a href="https://www.npmjs.com/package/githate"><strong>npmjs.com/package/githate</strong></a>
+</p>
 
-## Installation
+<p align="center">
+  <a href="https://www.npmjs.com/package/githate"><img src="https://img.shields.io/npm/v/githate" alt="npm version" /></a>
+  <a href="https://www.npmjs.com/package/githate"><img src="https://img.shields.io/npm/dm/githate" alt="npm downloads" /></a>
+  <a href="https://github.com/GithubAnant/githate"><img src="https://img.shields.io/github/stars/GithubAnant/githate" alt="GitHub stars" /></a>
+  <a href="https://github.com/GithubAnant/githate/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/githate" alt="license" /></a>
+</p>
 
-You can install `githate` globally using npm:
+---
+
+## Install
 
 ```bash
 npm install -g githate
 ```
 
-_Note: You may need to use `sudo` on macOS/Linux if you have permission issues._
-
-## Setup
-
-1.  **Generate a GitHub Personal Access Token (PAT)**:
-    - Go to [GitHub Settings > Developer settings > Personal access tokens > Tokens (classic)](https://github.com/settings/tokens).
-    - Click **Generate new token (classic)**.
-    - Give it a note (e.g., "GitHate CLI").
-    - Select the **`read:user`** and **`user:follow`** scopes.
-    - Click **Generate token** and copy it.
-
-2.  **Login**:
-    Run the login command and paste your token when prompted:
-    ```bash
-    githate login
-    ```
-
-## Usage
-
-### Check for Haters (Unfollowers)
-
-This is the main feature. Run this command to compare your current followers with the last saved state.
+or if you prefer pnpm:
 
 ```bash
-githate check
+pnpm add -g githate
 ```
 
-_On the first run, it will just save your current followers._
-
-### List Followers
+Then just run:
 
 ```bash
+githate
+```
+
+That's it. You get an interactive REPL shell. Type `/help` to see all commands.
+
+---
+
+## What It Does
+
+GitHate fetches your current GitHub followers, compares them against your last saved list, and reveals:
+
+- **Who unfollowed you** (the haters)
+- **Who started following you** (the fans)
+
+It stores everything locally on your machine. No server, no database, no third-party services.
+
+---
+
+## Getting Started
+
+### 1. Login
+
+Run `githate` and type `/login`. It uses GitHub OAuth Device Flow — open the link in your browser, enter the code, done. No tokens to copy-paste.
+
+### 2. Scan
+
+Type `/scan` to check for changes. On the first run it saves your current followers as a baseline. On every run after that, it diffs and shows you who left and who joined.
+
+### 3. View Hater History
+
+Type `/haters` to see every person who has ever unfollowed you, with dates. Repeat offenders are flagged.
+
+---
+
+## Commands
+
+GitHate works in two modes:
+
+**REPL mode** (run `githate` with no arguments):
+
+| Command      | Description                                     |
+| ------------ | ----------------------------------------------- |
+| `/scan`      | Check for new unfollowers and followers         |
+| `/haters`    | View the hall of shame (historical unfollowers) |
+| `/followers` | List your current followers                     |
+| `/following` | List who you are following                      |
+| `/login`     | Authenticate with GitHub                        |
+| `/logout`    | Remove stored credentials                       |
+| `/start`     | Start background auto-tracking service          |
+| `/stop`      | Stop background service                         |
+| `/status`    | Check if background service is running          |
+| `/why`       | The origin story                                |
+| `/help`      | Show all commands                               |
+| `/quit`      | Exit                                            |
+
+**Direct CLI mode** (single commands):
+
+```bash
+githate scan
+githate login
+githate haters
 githate followers
-```
-
-### List Following
-
-```bash
 githate following
-```
-
-### Follow a User
-
-```bash
 githate follow <username>
+githate unfollow <username>
+githate start --interval 60
+githate stop
+githate status
+githate clearcache
+githate logout
 ```
 
-### Unfollow a User
+---
+
+## Background Tracking
+
+Start a background service that polls GitHub on an interval and sends you a desktop notification when someone unfollows you.
 
 ```bash
-githate unfollow <username>
+githate start
 ```
 
-## Automation (Daily Check)
+Default interval is 720 minutes (12 hours). Change it with:
 
-You can set up a cron job or task scheduler to run `githate check` daily.
+```bash
+githate start --interval 60
+```
 
-### macOS / Linux (Cron)
+Check status or stop it:
 
-1.  Open your crontab:
-    ```bash
-    crontab -e
-    ```
-2.  Add the following line to run everyday at 9 AM:
-    ```bash
-    0 9 * * * /usr/local/bin/githate check >> /tmp/githate.log 2>&1
-    ```
-    _(Make sure to use the correct path to `githate`. You can find it with `which githate`)_
+```bash
+githate status
+githate stop
+```
 
-### Windows (Task Scheduler)
+---
 
-1.  Open **Task Scheduler**.
-2.  Create a Basic Task.
-3.  Set the trigger to **Daily**.
-4.  Set the action to **Start a program**.
-5.  Program/script: `githate` (or full path to `githate.cmd`).
-6.  Add arguments: `check`.
+## How It Works
+
+1. On first `/scan`, GitHate fetches all your followers from the GitHub API and saves them locally.
+2. On subsequent scans, it fetches again and diffs against the saved list.
+3. New followers and unfollowers are displayed. Unfollowers are saved to a persistent "hater history."
+4. The background service (`/start`) does the same thing in a detached process and sends OS notifications.
+
+Data is stored in your OS config directory:
+
+- **macOS**: `~/Library/Preferences/githate-cli-nodejs/config.json`
+- **Linux**: `~/.config/githate-cli-nodejs/config.json`
+- **Windows**: `%APPDATA%/githate-cli-nodejs/config.json`
+
+---
+
+## Guest Mode
+
+You can use GitHate without logging in. Just run `/scan` and enter any public GitHub username. Guest mode is limited to 60 API requests per hour. Login to get 5,000 requests per hour.
+
+---
+
+## Built By
+
+**Anant Singhal**
+
+- [GitHub](https://github.com/GithubAnant)
+- [Twitter](https://twitter.com/anant_hq)
+- [LinkedIn](https://linkedin.com/in/anantsinghal1)
+
+---
 
 ## License
 
