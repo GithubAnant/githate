@@ -4,6 +4,11 @@
   "description": "A CLI tool to track who unfollowed you on GitHub.",
   "main": "index.js",
   "type": "module",
+  "files": [
+    "bin",
+    "lib",
+    "index.js"
+  ],
   "bin": {
     "githate": "bin/hater.js"
   },
