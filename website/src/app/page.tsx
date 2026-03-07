@@ -6,7 +6,21 @@ import Image from "next/image";
 export default function Home() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHoveringVideo, setIsHoveringVideo] = useState(false);
+  const [pkgManager, setPkgManager] = useState<"npm" | "yarn" | "pnpm" | "brew">("npm");
+  const [copied, setCopied] = useState(false);
   const videoContainerRef = useRef<HTMLDivElement>(null);
+
+  const commandText =
+    pkgManager === "npm" ? "npm i -g githate" :
+      pkgManager === "yarn" ? "yarn global add githate" :
+        pkgManager === "pnpm" ? "pnpm add -g githate" :
+          "# brew install githate (Coming Soon)";
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(commandText);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -25,9 +39,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen relative flex flex-col items-center overflow-x-hidden selection:bg-white/20 bg-black font-sans">
-      {/* Background Hazes */}
-      <div className="absolute top-[20%] left-[-10%] w-[50%] h-[600px] bg-[#00b8d4]/25 blur-[140px] rounded-full pointer-events-none z-0" />
-      <div className="absolute top-[20%] right-[-10%] w-[50%] h-[600px] bg-[#ff7b00]/25 blur-[140px] rounded-full pointer-events-none z-0" />
 
       {/* Navigation */}
       <nav className="w-full px-12 py-8 flex items-center justify-between z-10 relative">
@@ -72,8 +83,53 @@ export default function Home() {
         </p>
       </section>
 
-      {/* Video Section */}
-      <section className="w-full px-6 mt-28 md:mt-40 mb-32 z-10">
+      {/* Code Snippet & Video Section */}
+      <section className="w-full px-6 mt-16 md:mt-24 mb-32 z-10 relative">
+        {/* Background Hazes Moved Here */}
+        <div className="absolute top-[10%] left-[-10%] w-[50%] h-[600px] bg-[#00b8d4]/25 blur-[140px] rounded-full pointer-events-none z-0" />
+        <div className="absolute top-[10%] right-[-10%] w-[50%] h-[600px] bg-[#ff7b00]/25 blur-[140px] rounded-full pointer-events-none z-0" />
+
+        {/* Code Snippet Component */}
+        <div className="max-w-[500px] mx-auto mb-16 relative z-10">
+          <div className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl overflow-hidden shadow-2xl">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-[#0a0a0a]">
+              <div className="flex gap-2">
+                {(["npm", "yarn", "pnpm", "brew"] as const).map((pm) => (
+                  <button
+                    key={pm}
+                    onClick={() => setPkgManager(pm)}
+                    className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${pkgManager === pm
+                      ? "bg-[#e5e5e5] text-black font-medium"
+                      : "bg-[#1a1a1a] text-[#a1a1aa] hover:bg-[#27272a] hover:text-white"
+                      }`}
+                  >
+                    {pm}
+                  </button>
+                ))}
+              </div>
+              <button
+                onClick={handleCopy}
+                className="p-1.5 text-[#a1a1aa] hover:text-white transition-colors"
+                aria-label="Copy code"
+              >
+                {copied ? (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                ) : (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                )}
+              </button>
+            </div>
+            <div className="p-5 overflow-x-auto bg-[#0a0a0a]">
+              <code
+                className="text-sm md:text-[15px] text-[#e5e5e5] whitespace-nowrap"
+                style={{ fontFamily: "var(--font-geist-mono)" }}
+              >
+                {commandText}
+              </code>
+            </div>
+          </div>
+        </div>
+
         <div
           ref={videoContainerRef}
           className="relative w-full max-w-[1600px] mx-auto rounded-[24px] overflow-hidden border border-white/5 shadow-2xl bg-black/50 cursor-none transform-gpu"
@@ -197,7 +253,7 @@ export default function Home() {
             Let's track our haters together
           </p>
           <div className="flex flex-row justify-center items-start gap-12 text-[14px] text-[#8e8e93]">
-            <div className="mt-1">
+            <div className="mt-1" style={{ fontFamily: "var(--font-geist-mono)" }}>
               <span>@Githate 2026</span>
             </div>
             <div className="flex flex-col gap-2 text-right z-10" style={{ fontFamily: "var(--font-geist-mono)" }}>
