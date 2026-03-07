@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function Home() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHoveringVideo, setIsHoveringVideo] = useState(false);
-  const [pkgManager, setPkgManager] = useState<"npm" | "yarn" | "pnpm" | "brew">("npm");
+  const [pkgManager, setPkgManager] = useState<"npm" | "pnpm" | "bun" | "yarn" | "brew">("npm");
   const [copied, setCopied] = useState(false);
   const videoContainerRef = useRef<HTMLDivElement>(null);
 
@@ -14,7 +14,8 @@ export default function Home() {
     pkgManager === "npm" ? "npm i -g githate" :
       pkgManager === "yarn" ? "yarn global add githate" :
         pkgManager === "pnpm" ? "pnpm add -g githate" :
-          "# brew install githate (Coming Soon)";
+          pkgManager === "bun" ? "bun add -g githate" :
+            "brew install GithubAnant/githate/githate";
 
   const handleCopy = () => {
     navigator.clipboard.writeText(commandText);
@@ -94,7 +95,7 @@ export default function Home() {
           <div className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl overflow-hidden shadow-2xl">
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-[#0a0a0a]">
               <div className="flex gap-2">
-                {(["npm", "yarn", "pnpm", "brew"] as const).map((pm) => (
+                {(["npm", "pnpm", "bun", "brew"] as const).map((pm) => (
                   <button
                     key={pm}
                     onClick={() => setPkgManager(pm)}
