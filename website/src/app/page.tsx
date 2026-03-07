@@ -95,7 +95,7 @@ export default function Home() {
           <div className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl overflow-hidden shadow-2xl">
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-[#0a0a0a]">
               <div className="flex gap-2">
-                {(["npm", "pnpm", "bun", "brew"] as const).map((pm) => (
+                {(["npm", "pnpm", "bun", "yarn", "brew"] as const).map((pm) => (
                   <button
                     key={pm}
                     onClick={() => setPkgManager(pm)}
