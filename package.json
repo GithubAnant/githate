@@ -25,6 +25,7 @@
   "license": "ISC",
   "dependencies": {
     "@clack/prompts": "^1.0.0",
+    "@databuddy/sdk": "^2.3.29",
     "@octokit/auth-oauth-device": "^8.0.3",
     "@octokit/rest": "^20.0.0",
     "boxen": "^8.0.1",

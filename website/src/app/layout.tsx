@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Instrument_Serif, Geist_Mono, Geist } from "next/font/google";
 import "./globals.css";
+import { Databuddy } from '@databuddy/sdk/react';
+
 
 const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument",
@@ -64,6 +66,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${instrumentSerif.variable} ${geistMono.variable} ${geist.variable} font-sans antialiased bg-black text-white min-h-screen selection:bg-white/20 selection:text-black`}>
         {children}
+        <Databuddy
+          clientId="3eeee398-d213-4280-946e-1626040a6785"
+          trackInteractions={true}
+        />
       </body>
     </html>
   );
