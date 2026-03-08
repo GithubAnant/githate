@@ -22,11 +22,25 @@ const geist = Geist({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://githate.anants.studio"),
-  title: "GitHate | Track who unfollowed you on GitHub",
+  title: {
+    default: "GitHate | Track who unfollowed you on GitHub",
+    template: "%s | GitHate",
+  },
   description: "A fast, privacy-first CLI tool to track who unfollowed you on GitHub directly from your terminal.",
-  keywords: ["github", "unfollowers", "cli", "tracker", "developer tools", "terminal"],
+  applicationName: "GitHate",
+  generator: "Next.js",
+  keywords: ["github", "unfollowers", "cli", "tracker", "developer tools", "terminal", "github unfollowers", "who unfollowed me on github"],
   authors: [{ name: "Anant Singhal", url: "https://twitter.com/anant_hq" }],
   creator: "Anant Singhal",
+  publisher: "Anant Singhal",
+  alternates: {
+    canonical: "/",
+  },
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
     title: "GitHate | Track who unfollowed you on GitHub",
     description: "A fast, privacy-first CLI tool to track who unfollowed you on GitHub directly from your terminal.",
@@ -49,11 +63,29 @@ export const metadata: Metadata = {
     description: "A fast, privacy-first CLI tool to track who unfollowed you on GitHub directly from your terminal.",
     images: ["/githate.png"],
     creator: "@anant_hq",
+    site: "@anant_hq",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   icons: {
     icon: "/githate.png",
     shortcut: "/githate.png",
     apple: "/githate.png",
+  },
+  manifest: "https://githate.anants.studio/manifest.webmanifest",
+  appleWebApp: {
+    title: "GitHate",
+    statusBarStyle: "black-translucent",
+    capable: true,
   },
 };
 
