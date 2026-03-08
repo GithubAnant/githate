@@ -1,0 +1,28 @@
+# GitHate
+
+> Track your biggest haters. The best CLI tool to find out who unfollowed you on GitHub.
+
+## Commands Structure
+
+ GitHate is a CLI tool providing the following commands:
+ - `scan`: Scans your GitHub profile to instantly identify who you follow that doesn't follow you back.
+ - `haters`: Lists the users who recently unfollowed you.
+ - `following`: View whom you follow with a stylized terminal output.
+ - `watch`: Background process tracking GitHub followers to get instant notifications when your follower count drops.
+ - `repl`: Interactive CLI shell for managing your GitHub social graph.
+ - `daemon`: Controls the background watcher.
+ 
+## Installation
+It supports standard Node package managers, as well as Homebrew:
+```sh
+npm i -g githate
+pnpm add -g githate
+bun add -g githate
+yarn global add githate
+brew install GithubAnant/githate/githate
+```
+
+## Useful Links
+- Author GitHub: [GithubAnant](https://github.com/GithubAnant)
+- Tool NPM: [NPMJS githate](https://www.npmjs.com/package/githate)
+- Tool GitHub Repo: [GithubAnant/githate](https://github.com/GithubAnant/githate)
