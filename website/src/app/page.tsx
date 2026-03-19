@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { SocialLink } from "../components/SocialLink";
 
 export default function Home() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -258,21 +259,33 @@ export default function Home() {
               <span>@Githate 2026</span>
             </div>
             <div className="flex flex-col gap-2 text-right z-10" style={{ fontFamily: "var(--font-geist-mono)" }}>
-              <a href="https://github.com/GithubAnant" target="_blank" rel="noreferrer" className="hover:text-white hover:italic transition-all cursor-pointer flex items-center justify-end gap-2 group">
-                <span>GithubAnant</span>
-                {/* GitHub Icon */}
-                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" className="group-hover:text-white text-[#8e8e93] transition-colors"><path d="M12 0C5.37 0 0 5.37 0 12C0 17.31 3.435 21.81 8.205 23.385C8.805 23.49 9.03 23.13 9.03 22.815C9.03 22.53 9.015 21.585 9.015 20.58C5.67 21.3 4.965 18.96 4.965 18.96C4.425 17.58 3.63 17.22 3.63 17.22C2.535 16.47 3.72 16.485 3.72 16.485C4.935 16.575 5.565 17.73 5.565 17.73C6.645 19.575 8.355 19.035 9.075 18.72C9.18 17.91 9.51 17.37 9.87 17.055C7.2 16.755 4.395 15.72 4.395 11.085C4.395 9.765 4.86 8.685 5.625 7.845C5.505 7.545 5.085 6.315 5.745 4.665C5.745 4.665 6.75 4.35 9.03 5.895C9.99 5.625 11.01 5.505 12.03 5.505C13.05 5.505 14.07 5.625 15.03 5.895C17.31 4.35 18.315 4.665 18.315 4.665C18.975 6.315 18.555 7.545 18.435 7.845C19.2 8.685 19.665 9.765 19.665 11.085C19.665 15.735 16.86 16.755 14.175 17.055C14.625 17.445 15.03 18.21 15.03 19.395C15.03 21.09 15.015 22.455 15.015 22.815C15.015 23.145 15.24 23.505 15.84 23.385C20.58 21.81 24 17.31 24 12C24 5.37 18.63 0 12 0Z" /></svg>
-              </a>
-              <a href="https://twitter.com/anant_hq" target="_blank" rel="noreferrer" className="hover:text-white hover:italic transition-all cursor-pointer flex items-center justify-end gap-2 group">
-                <span>anant_hq</span>
-                {/* X Icon */}
-                <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" className="group-hover:text-white text-[#8e8e93] transition-colors"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" /></svg>
-              </a>
-              <a href="https://linkedin.com/in/anantsinghal1" target="_blank" rel="noreferrer" className="hover:text-white hover:italic transition-all cursor-pointer flex items-center justify-end gap-2 group">
-                <span>anantsinghal1</span>
-                {/* LinkedIn Icon */}
-                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" className="group-hover:text-white text-[#8e8e93] transition-colors"><path d="M20.447 20.452H16.92V14.88C16.92 13.551 16.895 11.842 15.068 11.842C13.216 11.842 12.932 13.287 12.932 14.786V20.452H9.408V9H12.787V10.564H12.834C13.303 9.673 14.453 8.745 16.149 8.745C19.695 8.745 20.447 11.08 20.447 14.175V20.452ZM5.337 7.433C4.205 7.433 3.29 6.517 3.29 5.385C3.29 4.253 4.205 3.336 5.337 3.336C6.468 3.336 7.394 4.253 7.394 5.385C7.394 6.517 6.468 7.433 5.337 7.433ZM7.1 20.452H3.578V9H7.1V20.452ZM22.225 0H1.771C0.792 0 0 0.774 0 1.729V22.271C0 23.226 0.792 24 1.771 24H22.222C23.2 24 24 23.226 24 22.271V1.729C24 0.774 23.2 0 22.225 0Z" /></svg>
-              </a>
+              <SocialLink
+                href="https://github.com/GithubAnant"
+                label="GithubAnant"
+                icon={
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" className="group-hover:text-white text-[#8e8e93] transition-colors">
+                    <path d="M12 0C5.37 0 0 5.37 0 12C0 17.31 3.435 21.81 8.205 23.385C8.805 23.13 9.03 23.13 9.03 22.815C9.03 22.53 9.015 21.585 9.015 20.58C5.67 21.3 4.965 18.96 4.965 18.96C4.425 17.58 3.63 17.22 3.63 17.22C2.535 16.47 3.72 16.485 3.72 16.485C4.935 16.575 5.565 17.73 5.565 17.73C6.645 19.575 8.355 19.035 9.075 18.72C9.18 17.91 9.51 17.37 9.87 17.055C7.2 16.755 4.395 15.72 4.395 11.085C4.395 9.765 4.86 8.685 5.625 7.845C5.505 7.545 5.085 6.315 5.745 4.665C5.745 4.665 6.75 4.35 9.03 5.895C9.99 5.625 11.01 5.505 12.03 5.505C13.05 5.505 14.07 5.625 15.03 5.895C17.31 4.35 18.315 4.665 18.315 4.665C18.975 6.315 18.555 7.545 18.435 7.845C19.2 8.685 19.665 9.765 19.665 11.085C19.665 15.735 16.86 16.755 14.175 17.055C14.625 17.445 15.03 18.21 15.03 19.395C15.03 21.09 15.015 22.455 15.015 22.815C15.015 23.145 15.24 23.505 15.84 23.385C20.58 21.81 24 17.31 24 12C24 5.37 18.63 0 12 0Z" />
+                  </svg>
+                }
+              />
+              <SocialLink
+                href="https://twitter.com/anant_hq"
+                label="anant_hq"
+                icon={
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" className="group-hover:text-white text-[#8e8e93] transition-colors">
+                    <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+                  </svg>
+                }
+              />
+              <SocialLink
+                href="https://linkedin.com/in/anantsinghal1"
+                label="anantsinghal1"
+                icon={
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" className="group-hover:text-white text-[#8e8e93] transition-colors">
+                    <path d="M20.447 20.452H16.92V14.88C16.92 13.551 16.895 11.842 15.068 11.842C13.216 11.842 12.932 13.287 12.932 14.786V20.452H9.408V9H12.787V10.564H12.834C13.303 9.673 14.453 8.745 16.149 8.745C19.695 8.745 20.447 11.08 20.447 14.175V20.452ZM5.337 7.433C4.205 7.433 3.29 6.517 3.29 5.385C3.29 4.253 4.205 3.336 5.337 3.336C6.468 3.336 7.394 4.253 7.394 5.385C7.394 6.517 6.468 7.433 5.337 7.433ZM7.1 20.452H3.578V9H7.1V20.452ZM22.225 0H1.771C0.792 0 0 0.774 0 1.729V22.271C0 23.226 0.792 24 1.771 24H22.222C23.2 24 24 23.226 24 22.271V1.729C24 0.774 23.2 0 22.225 0Z" />
+                  </svg>
+                }
+              />
             </div>
           </div>
         </div>
