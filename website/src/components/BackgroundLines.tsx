@@ -31,7 +31,7 @@ export function BackgroundLines() {
             {[...Array(5)].map((_, i) => (
                 <div
                     key={i}
-                    className="w-[1px] h-full bg-gradient-to-b from-transparent via-white/50 to-transparent origin-top"
+                    className="w-px h-full bg-linear-to-b from-transparent via-white/50 to-transparent origin-top"
                 />
             ))}
         </div>
