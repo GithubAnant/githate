@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { SocialLink } from "../components/SocialLink";
+import { BackgroundHazes } from "../components/BackgroundHazes";
+
 
 export default function Home() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -87,9 +89,8 @@ export default function Home() {
 
       {/* Code Snippet & Video Section */}
       <section className="w-full px-6 mt-16 md:mt-24 mb-32 z-10 relative">
-        {/* Background Hazes Moved Here */}
-        <div className="absolute top-[10%] left-[-10%] w-[50%] h-[600px] bg-[#00b8d4]/25 blur-[140px] rounded-full pointer-events-none z-0" />
-        <div className="absolute top-[10%] right-[-10%] w-[50%] h-[600px] bg-[#ff7b00]/25 blur-[140px] rounded-full pointer-events-none z-0" />
+        {/* Background Hazes Component */}
+        <BackgroundHazes />
 
         {/* Code Snippet Component */}
         <div className="max-w-[500px] mx-auto mb-16 relative z-10">
